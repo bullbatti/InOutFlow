@@ -1,0 +1,217 @@
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <p-button
+        pRipple
+        severity="success"
+        label="New"
+        icon="pi pi-plus"
+        class="mr-2"
+        size="small"
+        (click)="openNew()"
+      />
+      <p-button
+        pRipple
+        severity="danger"
+        label="Delete"
+        icon="pi pi-trash"
+        size="small"
+        [disabled]="!selectedEmployees || !selectedEmployees.length"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <p-button
+        pRipple
+        severity="help"
+        label="Export"
+        icon="pi pi-upload"
+        size="small"
+      />
+    </ng-template>
+  </p-toolbar>
+  <p-table
+    #dt
+    [value]="employees"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="[
+      'firstName',
+      'lastName',
+      'rollNumber',
+      'accountType'
+    ]"
+    [tableStyle]="{ width: '100%' }"
+    [(selection)]="selectedEmployees"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="{first} of {totalRecords}"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">Manage Employees</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="onGlobalFilter($event)"
+            placeholder="Search..."
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th pSortableColumn="firstName" style="min-width: 10rem">
+          First Name <p-sortIcon field="firstName" />
+        </th>
+        <th pSortableColumn="lastName" style="min-width: 9rem">
+          Last Name <p-sortIcon field="lastName" />
+        </th>
+        <th pSortableColumn="rollNumber" style="min-width: 10rem">
+          Roll Number <p-sortIcon field="rollNumber" />
+        </th>
+        <th pSortableColumn="accountType" style="min-width: 11rem">
+          Account Type <p-sortIcon field="accountType" />
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="user" />
+        </td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.rollNumber }}</td>
+        <td>{{ user.accountType }}</td>
+        <td class="flex">
+          <p-button
+            pRipple
+            icon="pi pi-pencil"
+            class="mr-2"
+            [rounded]="true"
+            severity="success"
+            size="small"
+          />
+          <p-button
+            pRipple
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            size="small"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    [(visible)]="productDialog"
+    [style]="{ width: '450px', 'min-height': '95dvh' }"
+    header="New Employee"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="field">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          pInputText
+          id="firstName"
+          [(ngModel)]="employee.firstName"
+          required
+          autofocus
+          placeholder=""
+        />
+        <small class="p-error" *ngIf="submitted && !employee.firstName">
+          First name is required.
+        </small>
+      </div>
+      <div class="field">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          pInputText
+          id="lastName"
+          [(ngModel)]="employee.lastName"
+          required
+          autofocus
+        />
+        <small class="p-error" *ngIf="submitted && !employee.lastName">
+          Last name is required.
+        </small>
+      </div>
+      <div class="field">
+        <label for="birthDate">Date of birth</label>
+        <p-calendar
+          [(ngModel)]="employee.birthdate"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          inputId="icondisplay"
+        />
+        <small class="p-error" *ngIf="submitted && !employee.lastName">
+          Date of birth is required
+        </small>
+      </div>
+      <div class="field">
+        <label for="lastName">Email Address</label>
+        <input
+          type="email"
+          pInputText
+          id="email"
+          [(ngModel)]="employee.email"
+          required
+          autofocus
+        />
+        <small class="p-error" *ngIf="submitted && !employee.email">
+          Email address is required.
+        </small>
+      </div>
+      <div class="field">
+        <label for="accountType">Password</label>
+        <p-password [(ngModel)]="employee.password" />
+        <small class="p-error" *ngIf="submitted && !employee.accountType">
+          Account type is required
+        </small>
+      </div>
+      <div class="field">
+        <label for="accountType">Account Type</label>
+        <p-dropdown
+          [options]="accountTypes"
+          [(ngModel)]="employee.accountType"
+          optionLabel="name"
+          placeholder="Select account type"
+          id="accountType"
+        />
+        <small class="p-error" *ngIf="submitted && !employee.accountType">
+          Account type is required
+        </small>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        [text]="true"
+        (click)="hideDialog()"
+      />
+      <p-button
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        [text]="true"
+        (click)="saveEmployee(employee)"
+      />
+    </ng-template>
+  </p-dialog>
+
+  <!-- <p-confirmDialog [style]="{ width: '450px' }" /> -->

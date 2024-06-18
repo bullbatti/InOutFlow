@@ -1,0 +1,74 @@
+@if(employee) {
+<section class="componente m-0 mt-7 w-full">
+  <p-toast />
+  <div
+    class="relative h-full flex flex-column lg:flex-row gap-4 align-items-center lg:align-items-start lg:justify-content-start"
+  >
+    <!-- Calendar -->
+    <app-calendar [employee]="employee"></app-calendar>
+
+    <!-- Main container -->
+    <div
+      class="w-full flex flex-column gap-4"
+      style="min-height: calc(100dvh - 84px)"
+    >
+      <!-- Charts container -->
+      <div class="flex gap-4 flex-wrap justify-content-between">
+        <!-- Pie chart -->
+        <app-pie-chart
+          class="relative flex-1 xl:flex-initial w-full lg:w-auto w-full"
+        ></app-pie-chart>
+        <!-- Bar chart -->
+        <app-bar-chart class="relative flex-1"></app-bar-chart>
+      </div>
+      <!-- Form container -->
+      <div class="xl:w-6 w-full h-full">
+        <div class="w-full h-full">
+          <app-problems-form></app-problems-form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- @if(user.accountType !== "USER"){
+    <p-toast></p-toast>
+  <p-dialog
+    header="Edit Event"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '25rem'}"
+  >
+    <span class="p-text-secondary block mb-5">Update event information</span>
+    <div class="flex align-items-center gap-3 mb-3">
+      <label for="username" class="font-semibold w-6rem">Start time</label>
+      <p-calendar
+        [(ngModel)]="newStartDate"
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        [timeOnly]="true"
+        inputId="templatedisplay"
+      >
+      </p-calendar>
+    </div>
+    <div class="flex align-items-center gap-3 mb-7">
+      <label for="email" class="font-semibold w-6rem">End time</label>
+      <p-calendar
+        [(ngModel)]="newEndDate"
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        [timeOnly]="true"
+        inputId="templatedisplay"
+        
+      >
+      </p-calendar>
+    </div>
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+      <p-button label="Save" (onClick)="editEventDates()" (onClick)="visible = false"/>
+    </div>
+  </p-dialog>
+  } @else {
+    <p-toast />
+  } -->
+</section>
+}

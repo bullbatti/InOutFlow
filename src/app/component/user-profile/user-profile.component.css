@@ -1,0 +1,11 @@
+@media screen and (max-width: 992px) {
+  .calendar-panel-style {
+    width: 100% !important;
+  }
+}
+
+:host {
+  ::ng-deep .p-card-body {
+      padding: 15px;
+  }    
+}

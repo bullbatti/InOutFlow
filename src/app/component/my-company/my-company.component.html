@@ -1,0 +1,34 @@
+@if(user) {
+
+<section class="componente mt-7 w-full" style="padding: 30px 20px">
+  <p-toast></p-toast>
+  <p-tabView>
+    <p-tabPanel header="Employees">
+      <app-all-employees></app-all-employees>
+    </p-tabPanel>
+    <p-tabPanel header="Smart card Id reader" class="text-center">
+      <p>click the button to start reading a smartcard to be added</p>
+      <p-button (click)="showDialog()" (onClick)="readNewSmartCard()" label="Show" />
+      <p-dialog
+        header="Header"
+        [modal]="true"
+        [(visible)]="visible"
+        [style]="{ width: '50rem' }"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+        [maximizable]="true"
+      >
+        <p class="text-6xl font-bold">
+          @if (textASmartCard.length == 0) {
+          <p-progressSpinner
+            styleClass="w-4rem h-4rem"
+            strokeWidth="4"
+            ariaLabel="loading"
+          ></p-progressSpinner>
+          }
+          {{ textASmartCard }}
+        </p>
+      </p-dialog>
+    </p-tabPanel>
+  </p-tabView>
+</section>
+}
